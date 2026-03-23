@@ -49,8 +49,6 @@
             background-repeat: no-repeat;
             background-size: contain;
 
-            /* top: calc(100vh - 267px); 
-            left: calc(100vw - 267px); */
             top: calc(100vh - 267px); 
             left: calc(100vw - 267px);
             width: 267px;
@@ -88,21 +86,18 @@
             event.preventDefault();
             slotMachineBase.setAttribute("style", "display:none");
             slotMachineTriggered.setAttribute("style", "display:''");
-            // nameTag.style.bottom = "40vh";
-            // nameTag.style.right = "50vw";
-            console.log(x, y);
-            console.log("Dropped at: " + `${x}px` + ", " + `${y}px`);
-            console.log("Dropped modify at: " + `${x-133}px` + ", " + `${y-133}px`);
-            nameTag.style.left = `${x-133}px`;
-            nameTag.style.top = `${y-133}px`;
+
+            nameTag.style.left = event.clientX-133;
+            nameTag.style.top = event.clientY-133;
             nameTag.classList.remove('dragging');
+            nameTag.draggable = false;
         });
 
-        document.addEventListener("mousemove", (event) => {
-            x = event.clientX;
-            y = event.clientY;
-            console.log(x, y);
-        });
+        // document.addEventListener("mousemove", (event) => {
+        //     x = event.clientX;
+        //     y = event.clientY;
+        //     console.log(x, y);
+        // });
 
     </script>
 </html>
