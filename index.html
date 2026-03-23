@@ -37,10 +37,10 @@
 
             font-family: "Changa One", sans-serif;
             text-align: center;
-            color: rgb(255, 213, 124);
+            color: rgb(133, 42, 9);
             font-size: 35px;
 
-            border: dotted 5px rgb(255, 213, 124);
+            border: dotted 5px rgb(133, 42, 9);
         }
 
         .nameTag{
@@ -59,17 +59,109 @@
         .dragging{
             cursor: grab;
         }
+
+        .loadingEffect{
+            position: fixed;
+            background-image: url("img/loading.png");
+            height: 500px;
+            width: 500px;
+            z-index: 999;
+            animation: loadingAnimation 1s linear infinite;
+        }
+
+        .Treasure{
+            font-family: "Changa One", sans-serif;
+
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            width:100%;
+        }
+
+         .treasureNote{
+            font-family: "Changa One", sans-serif;
+
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+
+            color: rgb(235, 141, 249);
+            font-size: 25px;
+        }
+
+        .treasureInput{
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #num-1, #num-2, #num-3{
+            width: 50px;
+            height: 50px;
+            font-size: 30px;
+            text-align: center;
+            z-index: 999;
+
+            color:rgb(255, 183, 48);
+            font-family: "Changa One", sans-serif;
+        }
+
+        .treasureButton{
+            margin-top: 25px;
+            width: 100px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 60%;
+            font-family: "Changa One", sans-serif;
+            color: rgb(255, 157, 240);
+            border: none;
+
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .treasureButton:hover{
+            background-color: rgb(255, 157, 240);
+            color: rgb(255, 255, 255);
+        }
+
+        @keyframes loadingAnimation {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+            100% { transform: rotate(-360deg); }
+        }
         
     </style>
     <body>
         <div class="slot-machine-base">Drag your name tag here...</div>
         <div class="slot-machine-triggered" style="display:none">Name tag detected!</div>
         <div class="nameTag" draggable="true"></div>
+        <div class="loadingEffect" style="display:none"></div>
+        <div class="Treasure" style="display:none">
+            <h4 class="treasureNote">Please enter the key number to proceed.</h4>
+            <div class="treasureInput">
+                <input type="text" placeholder="" id="num-1">
+                <input type="text" placeholder="" id="num-2">
+                <input type="text" placeholder="" id="num-3">
+            </div>
+            <input type="button" value="Submit" class="treasureButton">
+        </div>
     </body>
     <script>
         const nameTag = document.getElementsByClassName("nameTag")[0];
         const slotMachineBase = document.getElementsByClassName("slot-machine-base")[0];
         const slotMachineTriggered = document.getElementsByClassName("slot-machine-triggered")[0];
+        const loadingEffect = document.getElementsByClassName("loadingEffect")[0];
+        const Treasure = document.getElementsByClassName("Treasure")[0];
+        const num1 = document.getElementById("num-1");
+        const num2 = document.getElementById("num-2");
+        const num3 = document.getElementById("num-3");
+        const submitButton = document.getElementsByClassName("treasureButton")[0];
+        const treasureNote = document.getElementsByClassName("treasureNote")[0];
 
         let x = 0;
         let y = 0;
@@ -91,13 +183,37 @@
             nameTag.style.top = event.clientY-133;
             nameTag.classList.remove('dragging');
             nameTag.draggable = false;
+
+            setTimeout(() => {
+                slotMachineTriggered.setAttribute("style", "display:none");
+                nameTag.setAttribute("style", "display:none");
+                loadingEffect.setAttribute("style", "display:''");
+                setTimeout(() => {
+                    loadingEffect.setAttribute("style", "display:none");
+                    Treasure.setAttribute("style", "display:''");
+                }, 1000);
+            }, 1500);
+        });
+        submitButton.addEventListener("click", () => {
+            if(num1.value === "1" && num2.value === "2" && num3.value === "3"){
+                alert("Congratulations! You've unlocked the treasure!");
+            } else {
+                treasureNote.textContent = "Wrong Number";
+                treasureNote.style.color = "rgb(255, 51, 48)";
+                setTimeout(()=>{
+                    treasureNote.textContent = "Please enter the key number to proceed.";
+                    treasureNote.style.color = "rgb(235, 141, 249)";
+
+                    num1.value = '';
+                    num2.value = '';
+                    num3.value = '';
+                }, 800);
+
+                
+                
+            }
         });
 
-        // document.addEventListener("mousemove", (event) => {
-        //     x = event.clientX;
-        //     y = event.clientY;
-        //     console.log(x, y);
-        // });
-
+        
     </script>
 </html>
