@@ -1,0 +1,193 @@
+<html>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&display=swap');
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-image: url("img/bg-3.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .dark-room {
+        background-color: black;
+        opacity: 0.8;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .light{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .lightPos{
+        height: 60px;
+        width: 40px;
+        background: none;
+        overflow: visible;
+        border: none;
+        margin-bottom: -15px;
+    }
+
+    .cake {
+        /* justify-content: center;
+        align-items: center;
+        text-align: center; */
+        width: 650px;
+        height: 650px;
+        background-image: url("img/cake.PNG");
+    }
+
+    .match-box {
+        position: fixed;
+        margin-left: 10vw;
+        background-image: url("img/matchbox.PNG");
+        width: 350px;
+        height: 350px;
+        top: calc(100vh - 550px);
+        left: calc(100vw - 550px);
+        background-color: transparent;
+        border: none;
+    }
+
+    .match{
+        position: fixed;
+        background-image: url("img/match.PNG");
+        width: 350px;
+        height: 350px;
+        right: 80px;
+        z-index: 999;
+
+        cursor: grab;
+    }
+
+    .hint-1 {
+        position: fixed;
+        right: 80px;
+        top: 380px;
+        color: rgb(99, 33, 9);
+        font-family: "Changa One", sans-serif;
+        z-index: 9999;
+        font-size: 20px;
+    }
+
+    .hint {
+        position: absolute;
+        color: rgb(235, 75, 142);
+        font-family: "Changa One", sans-serif;
+        z-index: 9999;
+        font-size: 20px;
+    }
+
+    .dragMatch{
+        animation: fire 5s ease-in-out infinite;
+        background-color:  rgb(255, 185, 6);
+        overflow: visible;
+        z-index: 1000;
+        clip-path: ellipse(40% 50% at 50% 100%);
+        border-radius: 50% 50% 50% 50% / 80% 80% 30% 30%;
+        /* color: red; */
+        opacity: 0.6;
+    }
+
+    .Wish{
+        position: fixed;
+        justify-items: center;
+        align-items: center;
+        text-align: center;
+        width: 500px;
+        height: 300px;
+        /* color: rgb(255, 255, 255); */
+        border-radius: 15px;
+        background-color: rgb(255, 255, 255);
+        border: dotted 5px rgb(133, 42, 9);
+        box-shadow: 10px 8px 6px rgb(187, 104, 150); ;
+    }
+
+
+    .words{
+        font-family: "Changa One", sans-serif;
+        color:rgb(56, 13, 3);
+        font-size: 50px;
+    }
+
+    .messageBtn{
+        background-color: rgb(87, 31, 4);
+        color:rgb(255, 106, 186);
+        border-radius: 60%;
+        border: none;
+        height: 50px;
+        width:80px;
+        margin-bottom: 25px;
+        font-family: "Changa One", sans-serif;
+    }
+
+    @keyframes fire{
+        0%{ clip-path: ellipse(45% 100% at 50% 100%); background-color:rgb(243, 135, 26); opacity: 0.4; transform: rotate(3deg);}
+        50%{ clip-path: ellipse(55% 80% at 50% 100%); background-color:rgb(250, 201, 53); opacity: 0.5;transform: rotate(-3deg);}
+    }
+</style>
+
+<body>
+    <!-- <div class="dark-room"></div> -->
+     <div class="Wish" style="display: none;">
+        <h4 class="words">Happy Birthday to Pei!!!</h4>
+        <input type="button" value="X" class="messageBtn">
+     </div>
+     <div class="light">
+        <div class="lightPos"></div>
+        <div class="cake"></div>
+    </div>
+    <div class="hint-1">Try clicking the matchbox</div>
+    <input type="button" class="match-box" >
+    <div class="match" draggable="true" style="display: none;">
+        <div>
+    <h5 class="hint">Try lighting up the candle</h5>
+</body>
+<script>
+    const match = document.getElementsByClassName("match")[0];
+    const matchBox = document.getElementsByClassName("match-box")[0];
+    const cake = document.getElementsByClassName("cake")[0];
+    const lightPos = document.getElementsByClassName("lightPos")[0];
+    const hint1 = document.getElementsByClassName("hint-1")[0];
+    const hint = document.getElementsByClassName("hint")[0];
+    const wish = document.getElementsByClassName("Wish")[0];
+    const messageBtn = document.getElementsByClassName("messageBtn")[0];
+
+
+    matchBox.addEventListener("click",()=>{
+        console.log("click");
+        match.setAttribute("style", "display:''");
+        hint1.setAttribute("style", "display:none");
+    })
+
+    match.addEventListener("drag", ()=>{
+        
+    })
+
+    lightPos.addEventListener("dragover", ()=>{
+        console.log("fire");
+        event.preventDefault();
+        hint.setAttribute("style", "display:none");
+        lightPos.classList.add('dragMatch');
+        matchBox.setAttribute("style", "display:none");
+        setTimeout(()=>{
+            wish.setAttribute("style", "display:''");
+            match.setAttribute("style", "display:none");
+            match.draggable = "false";
+        }, 3000);
+    })
+
+    messageBtn.addEventListener("click",()=>{
+        wish.setAttribute("style", "display:none");
+    })
+</script>
+
+</html>
